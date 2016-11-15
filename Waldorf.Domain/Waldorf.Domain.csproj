@@ -41,7 +41,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Enums\JobPositionTierOneCategoryType.cs" />
+    <Compile Include="Enums\JobPositionTierTwoCategoryType.cs" />
+    <Compile Include="Enums\JobPositionType.cs" />
     <Compile Include="Enums\PartyType.cs" />
+    <Compile Include="JobPositionTierOneCategory.cs" />
+    <Compile Include="JobPositionTierTwoCategory.cs" />
+    <Compile Include="JobPositionWrapper.cs" />
     <Compile Include="Party.cs" />
     <Compile Include="PartyTypeWrapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

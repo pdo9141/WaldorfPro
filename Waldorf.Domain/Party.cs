@@ -30,6 +30,8 @@ namespace Waldorf.Domain
 
         public ICollection<PartyTypeWrapper> PartyTypes { get; set; }
 
+        public ICollection<JobPositionWrapper> JobPositionsOfInterest { get; set; }
+
         [StringLength(75)]
         [Required]
         public string PreferredName { get; set; }
