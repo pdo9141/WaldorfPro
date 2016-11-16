@@ -1,15 +1,13 @@
-﻿using System.Collections.Generic;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Waldorf.Domain
 {
     public class JobPositionTierOneCategory
     {
-        public int Id { get; set; }
+        public long Id { get; set; }
+
+        public JobPositionTierOneCategoryType JobPositionTierOneCategoryType { get; set; }
         
-        public JobPositionTierOneCategoryType JobPositionTierOneType { get; set; }
-
-        public JobPositionType JobPositionType { get; set; }
-
-        public ICollection<JobPositionTierTwoCategory> JobPositionTierTwoCategories { get; set; }
+        public JobPositionTierTwoCategory JobPositionTierTwoCategory { get; set; }
     }
 }

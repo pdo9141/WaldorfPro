@@ -49,6 +49,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Migrations\201611160425463_Initial.cs" />
+    <Compile Include="Migrations\201611160425463_Initial.Designer.cs">
+      <DependentUpon>201611160425463_Initial.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WaldorfContext.cs" />
@@ -64,6 +68,11 @@
       <Project>{a970089b-7674-43cc-9eba-9e47c05711c2}</Project>
       <Name>Waldorf.Domain</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201611160425463_Initial.resx">
+      <DependentUpon>201611160425463_Initial.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

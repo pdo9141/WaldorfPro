@@ -5,6 +5,11 @@ namespace Waldorf.DataModel
 {
     public class WaldorfContext : DbContext
     {
+        public WaldorfContext(): base("WaldorfPro")
+        {
+            Configuration.LazyLoadingEnabled = false;
+        }
+
         public DbSet<Party> Parties { get; set; }
     }
 }

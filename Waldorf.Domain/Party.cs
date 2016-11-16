@@ -6,7 +6,13 @@ namespace Waldorf.Domain
 {
     public class Party
     {
-        public int Id { get; set; }
+        public Party()
+        {
+            PartyTypes = new HashSet<PartyTypeWrapper>();
+            JobPositionsOfInterest = new HashSet<JobPositionWrapper>();
+        }
+
+        public long Id { get; set; }
 
         [Display(Name = "First Name")]
         [Required]

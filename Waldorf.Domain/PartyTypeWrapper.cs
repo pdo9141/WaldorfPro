@@ -4,8 +4,11 @@ namespace Waldorf.Domain
 {
     public class PartyTypeWrapper
     {        
-        [Key]
+        public long Id { get; set; }
+
         public PartyType PartyType { get; set; }
+
+        public long PartyId { get; set; }
 
         public static implicit operator PartyType(PartyTypeWrapper val)
         {
