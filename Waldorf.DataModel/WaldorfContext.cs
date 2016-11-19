@@ -11,5 +11,7 @@ namespace Waldorf.DataModel
         }
 
         public DbSet<Party> Parties { get; set; }
+
+        public DbSet<School> Schools { get; set; }
     }
 }

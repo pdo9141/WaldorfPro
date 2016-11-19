@@ -45,6 +45,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
   </ItemGroup>
   <Choose>
     <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
@@ -59,6 +60,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="CacheServerConfiguration.cs" />
     <Compile Include="UnitTest1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -67,6 +69,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Waldorf.Common\Waldorf.Common.csproj">
+      <Project>{0eddf8c8-6bdc-4e74-8adf-c9a8b1cf8f1a}</Project>
+      <Name>Waldorf.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Waldorf.DataModel\Waldorf.DataModel.csproj">
       <Project>{aa7b92c4-e682-483e-b4ce-a2f9653a367d}</Project>
       <Name>Waldorf.DataModel</Name>

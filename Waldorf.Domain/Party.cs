@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using Waldorf.Domain.Enums;
 
 namespace Waldorf.Domain
 {
@@ -14,6 +15,8 @@ namespace Waldorf.Domain
 
         public long Id { get; set; }
 
+        public PartyStatusType PartyStatusType { get; set; }
+
         [Display(Name = "First Name")]
         [Required]
         [StringLength(50)]
@@ -24,6 +27,7 @@ namespace Waldorf.Domain
         [StringLength(50)]
         public string LastName { get; set; }
 
+        [EmailAddress]
         [Display(Name = "Email Address")]
         [Required]
         [StringLength(75)]

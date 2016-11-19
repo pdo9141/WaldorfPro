@@ -11,6 +11,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Waldorf.Web", "Waldorf.Web\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Waldorf.Tests", "Waldorf.Tests\Waldorf.Tests.csproj", "{0C87CCB4-0EA0-4220-B98B-8ED14B98BCF0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Waldorf.Common", "Waldorf.Common\Waldorf.Common.csproj", "{0EDDF8C8-6BDC-4E74-8ADF-C9A8B1CF8F1A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scripts", "Scripts", "{EAFF907C-2F01-4A44-9DFE-49C31C92FFED}"
+	ProjectSection(SolutionItems) = preProject
+		20161119104.sql = 20161119104.sql
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +40,10 @@ Global
 		{0C87CCB4-0EA0-4220-B98B-8ED14B98BCF0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0C87CCB4-0EA0-4220-B98B-8ED14B98BCF0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0C87CCB4-0EA0-4220-B98B-8ED14B98BCF0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0EDDF8C8-6BDC-4E74-8ADF-C9A8B1CF8F1A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0EDDF8C8-6BDC-4E74-8ADF-C9A8B1CF8F1A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0EDDF8C8-6BDC-4E74-8ADF-C9A8B1CF8F1A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0EDDF8C8-6BDC-4E74-8ADF-C9A8B1CF8F1A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

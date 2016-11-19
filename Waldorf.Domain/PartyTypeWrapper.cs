@@ -1,4 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Waldorf.Domain.Enums;
 
 namespace Waldorf.Domain
 {

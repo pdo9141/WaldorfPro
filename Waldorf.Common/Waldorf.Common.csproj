@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{A970089B-7674-43CC-9EBA-9E47C05711C2}</ProjectGuid>
+    <ProjectGuid>{0EDDF8C8-6BDC-4E74-8ADF-C9A8B1CF8F1A}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Waldorf.Domain</RootNamespace>
-    <AssemblyName>Waldorf.Domain</AssemblyName>
+    <RootNamespace>Waldorf.Common</RootNamespace>
+    <AssemblyName>Waldorf.Common</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -31,7 +31,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -41,30 +40,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Address.cs" />
-    <Compile Include="Enums\AwsnaAccreditationLevel.cs" />
-    <Compile Include="Enums\CompensationType.cs" />
-    <Compile Include="Enums\EmploymentType.cs" />
-    <Compile Include="Enums\JobPositionTierOneCategoryType.cs" />
-    <Compile Include="Enums\JobPositionTierTwoCategoryType.cs" />
-    <Compile Include="Enums\JobPositionType.cs" />
-    <Compile Include="Enums\PartyStatusType.cs" />
-    <Compile Include="Enums\PartyType.cs" />
-    <Compile Include="Enums\PostedJobPositionStatusType.cs" />
-    <Compile Include="Enums\SchoolDescriptionType.cs" />
-    <Compile Include="Enums\SchoolStatusType.cs" />
-    <Compile Include="JobPositionTierOneCategory.cs" />
-    <Compile Include="JobPositionTierTwoCategory.cs" />
-    <Compile Include="JobPositionWrapper.cs" />
-    <Compile Include="PostedJobPositionCategory.cs" />
-    <Compile Include="Party.cs" />
-    <Compile Include="PartyTypeWrapper.cs" />
-    <Compile Include="PostedJobPosition.cs" />
+    <Compile Include="Configurations\XmlDeserializeConfigSectionHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="School.cs" />
-    <Compile Include="SchoolDescriptionTypeWrapper.cs" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

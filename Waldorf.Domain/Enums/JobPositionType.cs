@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Waldorf.Domain
+namespace Waldorf.Domain.Enums
 {
     public enum JobPositionType
     {
