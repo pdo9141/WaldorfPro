@@ -183,6 +183,11 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201611210527580_Identity.cs" />
+    <Compile Include="Migrations\201611210527580_Identity.Designer.cs">
+      <DependentUpon>201611210527580_Identity.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -261,6 +266,11 @@
       <Project>{a970089b-7674-43cc-9eba-9e47c05711c2}</Project>
       <Name>Waldorf.Domain</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201611210527580_Identity.resx">
+      <DependentUpon>201611210527580_Identity.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

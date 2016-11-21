@@ -5,7 +5,7 @@ namespace Waldorf.DataModel
 {
     public class WaldorfContext : DbContext
     {
-        public WaldorfContext(): base("WaldorfPro")
+        public WaldorfContext() : base("WaldorfPro")
         {
             Configuration.LazyLoadingEnabled = false;
         }

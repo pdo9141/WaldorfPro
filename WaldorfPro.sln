@@ -14,8 +14,15 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Waldorf.Common", "Waldorf.Common\Waldorf.Common.csproj", "{0EDDF8C8-6BDC-4E74-8ADF-C9A8B1CF8F1A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scripts", "Scripts", "{EAFF907C-2F01-4A44-9DFE-49C31C92FFED}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DataModel", "DataModel", "{62367223-0B5E-44FA-9C2A-65EAAD0ED91A}"
 	ProjectSection(SolutionItems) = preProject
 		20161119104.sql = 20161119104.sql
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Identity", "Identity", "{368447B0-DD68-48AC-8984-02067E547A6B}"
+	ProjectSection(SolutionItems) = preProject
+		20161120932.sql = 20161120932.sql
 	EndProjectSection
 EndProject
 Global
@@ -47,5 +54,9 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{62367223-0B5E-44FA-9C2A-65EAAD0ED91A} = {EAFF907C-2F01-4A44-9DFE-49C31C92FFED}
+		{368447B0-DD68-48AC-8984-02067E547A6B} = {EAFF907C-2F01-4A44-9DFE-49C31C92FFED}
 	EndGlobalSection
 EndGlobal
