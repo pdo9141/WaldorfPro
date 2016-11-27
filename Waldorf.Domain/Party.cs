@@ -11,6 +11,11 @@ namespace Waldorf.Domain
         {
             PartyTypes = new HashSet<PartyTypeWrapper>();
             JobPositionsOfInterest = new HashSet<JobPositionWrapper>();
+            FavoritedPostedJobPositionIds = new HashSet<long>();
+            Undergraduates = new HashSet<Undergraduate>();
+            Graduates = new HashSet<Graduate>();
+            StateCredentials = new HashSet<StateCredential>();
+            OccupationalCertifications = new HashSet<OccupationalCertification>();
         }
 
         public long Id { get; set; }
@@ -42,12 +47,28 @@ namespace Waldorf.Domain
 
         public ICollection<JobPositionWrapper> JobPositionsOfInterest { get; set; }
 
+        public ICollection<long> FavoritedPostedJobPositionIds { get; set; }
+
+        public ICollection<Undergraduate> Undergraduates { get; set; }
+
+        public ICollection<Graduate> Graduates { get; set; }
+
+        public ICollection<StateCredential> StateCredentials { get; set; }
+
+        public ICollection<OccupationalCertification> OccupationalCertifications { get; set; }
+        
         [StringLength(75)]
         [Required]
         public string PreferredName { get; set; }
 
         [StringLength(100)]
         public string ProfileImageName { get; set; }
+
+        public CreditCard CreditCard { get; set; }
+
+        [StringLength(128)]
+        [Required]
+        public string UserId { get; set; }
 
         public DateTime DateCreated { get; set; }
     }

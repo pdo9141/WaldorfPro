@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Waldorf.Domain.Enums;
 
 namespace Waldorf.Domain
 {
@@ -16,11 +17,10 @@ namespace Waldorf.Domain
         [Required]
         [StringLength(50)]
         public string City { get; set; }
-        
+
         [Required]
-        [StringLength(2)]
-        public string State { get; set; }
-        
+        public StateAbbreviation State { get; set; }
+
         [Display(Name = "ZIP Code")]
         [Required]
         [StringLength(10)]

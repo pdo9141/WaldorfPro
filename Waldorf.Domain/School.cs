@@ -49,6 +49,8 @@ namespace Waldorf.Domain
 
         public ICollection<PostedJobPosition> PostedJobPositions { get; set; }
 
+        public CreditCard CreditCard { get; set; }
+
         public DateTime DateCreated { get; set; }
     }
 }

@@ -42,8 +42,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Address.cs" />
+    <Compile Include="CreditCard.cs" />
     <Compile Include="Enums\AwsnaAccreditationLevel.cs" />
     <Compile Include="Enums\CompensationType.cs" />
+    <Compile Include="Enums\CreditCardStatusType.cs" />
+    <Compile Include="Enums\CreditCardType.cs" />
+    <Compile Include="Enums\DegreeType.cs" />
     <Compile Include="Enums\EmploymentType.cs" />
     <Compile Include="Enums\JobPositionTierOneCategoryType.cs" />
     <Compile Include="Enums\JobPositionTierTwoCategoryType.cs" />
@@ -53,9 +57,13 @@
     <Compile Include="Enums\PostedJobPositionStatusType.cs" />
     <Compile Include="Enums\SchoolDescriptionType.cs" />
     <Compile Include="Enums\SchoolStatusType.cs" />
+    <Compile Include="Enums\StateAbbreviation.cs" />
+    <Compile Include="Enums\WaldorfTeachingCertificationType.cs" />
+    <Compile Include="Graduate.cs" />
     <Compile Include="JobPositionTierOneCategory.cs" />
     <Compile Include="JobPositionTierTwoCategory.cs" />
     <Compile Include="JobPositionWrapper.cs" />
+    <Compile Include="OccupationalCertification.cs" />
     <Compile Include="PostedJobPositionCategory.cs" />
     <Compile Include="Party.cs" />
     <Compile Include="PartyTypeWrapper.cs" />
@@ -63,6 +71,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="School.cs" />
     <Compile Include="SchoolDescriptionTypeWrapper.cs" />
+    <Compile Include="SchoolParty.cs" />
+    <Compile Include="StateCredential.cs" />
+    <Compile Include="Undergraduate.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

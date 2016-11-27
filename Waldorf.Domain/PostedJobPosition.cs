@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using Waldorf.Domain.Enums;
 
@@ -6,6 +7,11 @@ namespace Waldorf.Domain
 {
     public class PostedJobPosition
     {
+        public PostedJobPosition()
+        {
+            FavoritedPartyIds = new HashSet<long>();            
+        }
+
         public long Id { get; set; }
 
         public int SchoolId { get; set; }
@@ -28,8 +34,14 @@ namespace Waldorf.Domain
 
         public bool HasBenefits { get; set; }
 
+        public DateTime StartDate { get; set; }
+
         public PostedJobPositionCategory Category { get; set; }
-        
+
+        public ICollection<long> FavoritedPartyIds { get; set; }
+
+        public DateTime DateFilled { get; set; }
+
         public DateTime DateCreated { get; set; }
     }
 }

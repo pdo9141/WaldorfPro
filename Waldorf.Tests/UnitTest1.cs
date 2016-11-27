@@ -3,10 +3,12 @@ using System.Linq;
 using System.Data.Entity;
 using System.Configuration;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Waldorf.Domain;
 using Waldorf.DataModel;
 using Waldorf.Domain.Enums;
+using Waldorf.Common.Security;
 
 namespace Waldorf.Tests
 {
@@ -17,6 +19,14 @@ namespace Waldorf.Tests
         public void Config_Section_Test()
         {
             var cacheServerConfiguration = (CacheServerConfiguration)ConfigurationManager.GetSection("CacheServerConfiguration");
+        }
+
+        [TestMethod]
+        public void EncryptionHelper_Test()
+        {
+            string plain = "1111 2222 3333 4444";
+            string encrypted = EncryptionHelper.Encrypt<RijndaelManaged>(plain, "password", "salt");
+            string decrypted = EncryptionHelper.Decrypt<RijndaelManaged>(encrypted, "password", "salt");
         }
 
         [TestMethod]
@@ -94,7 +104,7 @@ namespace Waldorf.Tests
                 {
                     Street = "153 Cool St.",
                     City = "Garden Grove",
-                    State = "CA",
+                    State = StateAbbreviation.CA,
                     ZipCode = "92843",
                     Country = "USA"
                 },
