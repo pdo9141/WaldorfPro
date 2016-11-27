@@ -59,6 +59,9 @@
     <Compile Include="Enums\SchoolStatusType.cs" />
     <Compile Include="Enums\StateAbbreviation.cs" />
     <Compile Include="Enums\WaldorfTeachingCertificationType.cs" />
+    <Compile Include="Evaluation.cs" />
+    <Compile Include="FavoritedParty.cs" />
+    <Compile Include="FavoritedPostedJobPosition.cs" />
     <Compile Include="Graduate.cs" />
     <Compile Include="JobPositionTierOneCategory.cs" />
     <Compile Include="JobPositionTierTwoCategory.cs" />
@@ -69,11 +72,13 @@
     <Compile Include="PartyTypeWrapper.cs" />
     <Compile Include="PostedJobPosition.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RecommendationLetter.cs" />
     <Compile Include="School.cs" />
     <Compile Include="SchoolDescriptionTypeWrapper.cs" />
     <Compile Include="SchoolParty.cs" />
     <Compile Include="StateCredential.cs" />
     <Compile Include="Undergraduate.cs" />
+    <Compile Include="WaldorfTeachingCertificationTypeWrapper.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

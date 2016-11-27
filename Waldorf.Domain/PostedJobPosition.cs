@@ -9,7 +9,7 @@ namespace Waldorf.Domain
     {
         public PostedJobPosition()
         {
-            FavoritedPartyIds = new HashSet<long>();            
+            FavoritedParties = new HashSet<FavoritedParty>();            
         }
 
         public long Id { get; set; }
@@ -38,7 +38,7 @@ namespace Waldorf.Domain
 
         public PostedJobPositionCategory Category { get; set; }
 
-        public ICollection<long> FavoritedPartyIds { get; set; }
+        public ICollection<FavoritedParty> FavoritedParties { get; set; }
 
         public DateTime DateFilled { get; set; }
 

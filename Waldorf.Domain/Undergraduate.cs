@@ -5,6 +5,8 @@ namespace Waldorf.Domain
 {
     public class Undergraduate
     {
+        public long Id { get; set; }
+
         [Display(Name = "Name of School")]
         [Required]
         [StringLength(50)]

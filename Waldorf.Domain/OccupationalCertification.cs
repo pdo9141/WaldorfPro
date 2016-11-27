@@ -5,6 +5,8 @@ namespace Waldorf.Domain
 {
     public class OccupationalCertification
     {
+        public long Id { get; set; }
+
         [Required]
         [StringLength(100)]
         public string Name { get; set; }
