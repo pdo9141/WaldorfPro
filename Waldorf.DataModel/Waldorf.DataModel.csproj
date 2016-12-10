@@ -53,6 +53,10 @@
     <Compile Include="Migrations\201611270341018_Initial.Designer.cs">
       <DependentUpon>201611270341018_Initial.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201612101908070_ApprovePartyMatch.cs" />
+    <Compile Include="Migrations\201612101908070_ApprovePartyMatch.Designer.cs">
+      <DependentUpon>201612101908070_ApprovePartyMatch.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WaldorfContext.cs" />
@@ -72,6 +76,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201611270341018_Initial.resx">
       <DependentUpon>201611270341018_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612101908070_ApprovePartyMatch.resx">
+      <DependentUpon>201612101908070_ApprovePartyMatch.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

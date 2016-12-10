@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Address.cs" />
+    <Compile Include="ApprovedMatchPostedJobPosition.cs" />
     <Compile Include="CreditCard.cs" />
     <Compile Include="Enums\AwsnaAccreditationLevel.cs" />
     <Compile Include="Enums\CompensationType.cs" />

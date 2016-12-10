@@ -66,6 +66,10 @@ namespace Waldorf.Domain
 
         public ICollection<Evaluation> Evaluations { get; set; }
 
+        public ICollection<ApprovedMatchPostedJobPosition> ApprovedMatchPostedJobPositions { get; set; }
+
+        public bool AllowSchoolMatchWithoutApproval { get; set; }
+        
         [StringLength(100)]
         public string WaldorfTranscriptFileName { get; set; }
 
