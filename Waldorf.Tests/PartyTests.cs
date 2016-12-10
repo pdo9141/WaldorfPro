@@ -2,7 +2,6 @@
 using System.Linq;
 using System.Diagnostics;
 using System.Data.Entity;
-using System.Configuration;
 using System.Collections.Generic;
 using System.Security.Cryptography;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -14,22 +13,8 @@ using Waldorf.Common.Security;
 namespace Waldorf.Tests
 {
     [TestClass]
-    public class UnitTest1
+    public class PartyTests
     {
-        [TestMethod]
-        public void Config_Section_Test()
-        {
-            var cacheServerConfiguration = (CacheServerConfiguration)ConfigurationManager.GetSection("CacheServerConfiguration");
-        }
-
-        [TestMethod]
-        public void EncryptionHelper_Test()
-        {
-            string plain = "1111222233334444";
-            string encrypted = EncryptionHelper.Encrypt<RijndaelManaged>(plain, "password", "salt");
-            string decrypted = EncryptionHelper.Decrypt<RijndaelManaged>(encrypted, "password", "salt");
-        }
-
         [TestMethod]
         public void Party_Select_EagerLoad_Test()
         {
@@ -40,6 +25,7 @@ namespace Waldorf.Tests
 
                 context.Configuration.ProxyCreationEnabled = false; // When using Include, no proxies are required.
                 var parties = context.Parties.Where(p => p.FirstName == "Megan")
+                    .Include(p => p.CreditCard)
                     .Include(p => p.PartyTypes)
                     .Include(p => p.Graduates)
                     .Include(p => p.Undergraduates)
@@ -49,7 +35,7 @@ namespace Waldorf.Tests
                     .Include("JobPositionsOfInterest.JobPositionTierOneCategory.JobPositionTierTwoCategory").AsNoTracking().ToList();
 
                 sw.Stop();
-                Console.WriteLine("Query with include: {0}", sw.ElapsedMilliseconds);
+                Console.WriteLine("Query with eager load: {0}", sw.ElapsedMilliseconds);
 
                 /*
                 foreach (var party in parties)
@@ -70,20 +56,32 @@ namespace Waldorf.Tests
                 Stopwatch sw = new Stopwatch();
                 sw.Start();
 
-                var query = context.Parties.Where(p => p.FirstName == "Megan")
+                /*
+                var party = context.Parties.Find(1);
+                context.Entry(party).Reference(p => p.CreditCard).Load();
+                context.Entry(party).Collection(p => p.Graduates).Load();
+                context.Entry(party).Collection(p => p.Undergraduates).Load();
+                context.Entry(party).Collection(p => p.StateCredentials).Load();
+                context.Entry(party).Collection(p => p.WaldorfTeachingCertifications).Load();
+                context.Entry(party).Collection(p => p.OccupationalCertifications).Load();
+                */
+
+                var parties = context.Parties.Where(p => p.FirstName == "Megan")
                     .Include(p => p.PartyTypes)
-                    .Include("JobPositionsOfInterest.JobPositionTierOneCategory.JobPositionTierTwoCategory");
+                    .Include("JobPositionsOfInterest.JobPositionTierOneCategory.JobPositionTierTwoCategory").ToList();
 
-                query.SelectMany(p => p.Graduates).Load();
-                query.SelectMany(p => p.Undergraduates).Load();
-                query.SelectMany(p => p.StateCredentials).Load();
-                query.SelectMany(p => p.WaldorfTeachingCertifications).Load();
-                query.SelectMany(p => p.OccupationalCertifications).Load();
+                foreach (var party in parties)
+                {
+                    context.Entry(party).Reference(p => p.CreditCard).Load();
+                    context.Entry(party).Collection(p => p.Graduates).Load();
+                    context.Entry(party).Collection(p => p.Undergraduates).Load();
+                    context.Entry(party).Collection(p => p.StateCredentials).Load();
+                    context.Entry(party).Collection(p => p.WaldorfTeachingCertifications).Load();
+                    context.Entry(party).Collection(p => p.OccupationalCertifications).Load();
+                }
                 
-                var parties = query.AsNoTracking().ToList();
-
                 sw.Stop();
-                Console.WriteLine("Query with include selectmany: {0}", sw.ElapsedMilliseconds);
+                Console.WriteLine("Query with explicit load: {0}", sw.ElapsedMilliseconds);
             }
         }
 
@@ -229,102 +227,80 @@ namespace Waldorf.Tests
                 context.SaveChanges();
             }
         }
-
-        [TestMethod]
-        public void School_Insert_Test()
+        
+        private void BenchmarkQueries()
         {
-            var school = new School
+            /*
+            Benchmark("Load with include", () =>
             {
-                SchoolStatusType = SchoolStatusType.Pending,
-                Name = "Waldorf Garden Grove",
-                Address = new Address
+                using (var db = new gmokContext())
                 {
-                    Street = "153 Cool St.",
-                    City = "Garden Grove",
-                    State = StateAbbreviation.CA,
-                    ZipCode = "92843",
-                    Country = "USA"
-                },
-                PhoneNumber = "714-555-5555",
-                EmailAddress = "admin@GGWaldorf.com",
-                WebAddress = "http://www.GGWaldorf.com/",
-                AwsnaAccreditationLevel = AwsnaAccreditationLevel.Accredited,
-                YearFounded = 2016,
-                Enrollment = 720,
-                DateCreated = DateTime.UtcNow
-            };
+                    var contacts = db.ContactInformations.Include(x => x.ContactInformationMails).Include(x => x.ContactInformationPhonenumbers).AsNoTracking().ToList();
+                }
+            });
 
-            var schoolDescriptionTypes = new HashSet<SchoolDescriptionTypeWrapper>();
-            schoolDescriptionTypes.Add(SchoolDescriptionType.Nursery);
-            schoolDescriptionTypes.Add(SchoolDescriptionType.PreK);
-            schoolDescriptionTypes.Add(SchoolDescriptionType.Kindergarten);
-            school.SchoolDescriptionTypes = schoolDescriptionTypes;
-
-            using (var context = new WaldorfContext())
+            Benchmark("Load separate and fix", () =>
             {
-                context.Schools.Add(school);
-                context.SaveChanges();
-            }
-        }
-
-        [TestMethod]
-        public void PostedJobPosition_Insert_Admin_Test()
-        {
-            var postedJobPosition = new PostedJobPosition
-            {
-                PostedJobPositionStatusType = PostedJobPositionStatusType.Active,
-                PartyType = PartyType.Administrator,
-                EmploymentType = EmploymentType.SalariedFullTime,
-                Title = "Development President",
-                Description = "President of Development",
-                Compensation = 153000,
-                CompensationType = CompensationType.Annually,
-                HasBenefits = true,
-                Category = new PostedJobPositionCategory { JobPositionType = JobPositionType.DevelopmentDirector },
-                DateCreated = DateTime.UtcNow
-            };
-
-            using (var context = new WaldorfContext())
-            {
-                var school = context.Schools.FirstOrDefault(p => p.Name == "Waldorf Garden Grove");
-                school.PostedJobPositions.Add(postedJobPosition);
-                context.SaveChanges();
-            }
-        }
-
-        [TestMethod]
-        public void PostedJobPosition_Insert_Teacher_Test()
-        {
-            var postedJobPosition = new PostedJobPosition
-            {
-                PostedJobPositionStatusType = PostedJobPositionStatusType.Active,
-                PartyType = PartyType.Teacher,
-                EmploymentType = EmploymentType.SalariedFullTime,
-                Compensation = 45000,
-                CompensationType = CompensationType.Annually,
-                HasBenefits = true,
-                DateCreated = DateTime.UtcNow
-            };
-
-            postedJobPosition.Category = new PostedJobPositionCategory
-            {
-                JobPositionType = JobPositionType.HighSchoolTeacher,
-                JobPositionTierOneCategory = new JobPositionTierOneCategory
+                using (var db = new gmokContext())
                 {
-                    JobPositionTierOneCategoryType = JobPositionTierOneCategoryType.WorldLanguages,
-                    JobPositionTierTwoCategory = new JobPositionTierTwoCategory
+                    var contacts = db.ContactInformations.AsNoTracking().ToList();
+                    var phones = db.ContactInformationPhonenumbers.AsNoTracking().ToLookup(x => x.ContactInformationID);
+                    var mails = db.ContactInformationMails.AsNoTracking().ToLookup(x => x.ContactInformationID);
+
+                    foreach (var c in contacts)
                     {
-                        JobPositionTierTwoCategoryType = JobPositionTierTwoCategoryType.French
+                        c.ContactInformationMails = mails.Contains(c.ID) ? mails[c.ID].ToList() : new List<ContactInformationMail>();
+                        c.ContactInformationPhonenumbers = phones.Contains(c.ID) ? phones[c.ID].ToList() : new List<ContactInformationPhonenumber>();
                     }
                 }
-            };
+            });
 
-            using (var context = new WaldorfContext())
+            Benchmark("Load separate as batch", () =>
             {
-                var school = context.Schools.FirstOrDefault(p => p.Name == "Waldorf Garden Grove");
-                school.PostedJobPositions.Add(postedJobPosition);
-                context.SaveChanges();
-            }
+                using (var db = new gmokContext())
+                {
+                    var cmd = db.Database.Connection.CreateCommand();
+
+                    Benchmark("generate sql", () =>
+                    {
+                        var csql = db.ContactInformations.ToString();
+                        var psql = db.ContactInformationPhonenumbers.ToString();
+                        var msql = db.ContactInformationMails.ToString();
+
+                        cmd.CommandText =
+                            csql + ";" + Environment.NewLine + Environment.NewLine +
+                            psql + ";" + Environment.NewLine + Environment.NewLine +
+                            msql + ";";
+
+                    });
+
+
+                    db.Database.Connection.Open();
+                    // Run the sproc 
+                    var reader = cmd.ExecuteReader();
+
+                    var contacts = ((IObjectContextAdapter)db)
+                        .ObjectContext
+                        .Translate<ContactInformation>(reader, "ContactInformations", MergeOption.NoTracking).ToList();
+                    reader.NextResult();
+
+                    var phones = ((IObjectContextAdapter)db)
+                        .ObjectContext
+                        .Translate<ContactInformationPhonenumber>(reader, "ContactInformationPhonenumbers", MergeOption.NoTracking).ToLookup(c => c.ContactInformationID);
+                    reader.NextResult();
+
+                    var mails = ((IObjectContextAdapter)db)
+                        .ObjectContext
+                        .Translate<ContactInformationMail>(reader, "ContactInformationMails", MergeOption.NoTracking).ToLookup(c => c.ContactInformationID);
+
+                    foreach (var c in contacts)
+                    {
+                        c.ContactInformationMails = mails.Contains(c.ID) ? mails[c.ID].ToList() : new List<ContactInformationMail>();
+                        c.ContactInformationPhonenumbers = phones.Contains(c.ID) ? phones[c.ID].ToList() : new List<ContactInformationPhonenumber>();
+                    }
+                }
+            });
+            */
         }
     }
 }

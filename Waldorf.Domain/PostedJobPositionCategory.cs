@@ -9,7 +9,7 @@ namespace Waldorf.Domain
         public JobPositionType JobPositionType { get; set; }
         
         public JobPositionTierOneCategory JobPositionTierOneCategory { get; set; }
-
+        
         public static implicit operator JobPositionType(PostedJobPositionCategory val)
         {
             return val.JobPositionType;

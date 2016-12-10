@@ -40,7 +40,7 @@ namespace Waldorf.Domain
 
         public ICollection<FavoritedParty> FavoritedParties { get; set; }
 
-        public DateTime DateFilled { get; set; }
+        public DateTime? DateFilled { get; set; }
 
         public DateTime DateCreated { get; set; }
     }

@@ -22,6 +22,7 @@ SELECT * FROM [dbo].[Undergraduates]
 SELECT * FROM [dbo].[WaldorfTeachingCertificationTypeWrappers]
 
 --DELETE [dbo].[__MigrationHistory] WHERE ContextKey = 'Waldorf.DataModel.Migrations.Configuration'
+--DELETE [dbo].[__MigrationHistory] WHERE MigrationId = '201612102229360_PostedJobPositionForeignKey'
 --DROP TABLE [dbo].[Evaluations]
 --DROP TABLE [dbo].[RecommendationLetters]
 --DROP TABLE [dbo].[Graduates]
