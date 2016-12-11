@@ -7,10 +7,10 @@ using Waldorf.DataModel;
 namespace Waldorf.Tests
 {
     [TestClass]
-    public class ColleagueSchoolMatchTests
+    public class MatchQueriesTests
     {
         [TestMethod]
-        public void JobPosition_Colleague_Match_Test()
+        public void MatchQueries_JobPosition_Colleague_Test()
         {
             using (var context = new WaldorfContext())
             {
@@ -40,7 +40,7 @@ namespace Waldorf.Tests
         }
 
         [TestMethod]
-        public void Colleague_JobPosition_Match_Test()
+        public void MatchQueries_Colleague_JobPosition_Test()
         {
             using (var context = new WaldorfContext())
             {

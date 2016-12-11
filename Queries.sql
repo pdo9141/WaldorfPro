@@ -1,4 +1,5 @@
-﻿--SELECT * FROM [dbo].[__MigrationHistory]
+﻿USE WaldorfPro
+--SELECT * FROM [dbo].[__MigrationHistory]
 SELECT * FROM [dbo].[Addresses]
 SELECT * FROM [dbo].[ApprovedMatchPostedJobPositions]
 SELECT * FROM [dbo].[CreditCards]

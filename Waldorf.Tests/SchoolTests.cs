@@ -68,7 +68,7 @@ namespace Waldorf.Tests
         }
 
         [TestMethod]
-        public void PostedJobPosition_Insert_Teacher_Test()
+        public void School_PostedJobPosition_Insert_Teacher_Test()
         {
             var postedJobPosition = new PostedJobPosition
             {
@@ -106,20 +106,21 @@ namespace Waldorf.Tests
         }
 
         [TestMethod]
-        public void PostedJobPosition_Insert_Admin_Test()
+        public void School_PostedJobPosition_Insert_Admin_Test()
         {
             var postedJobPosition = new PostedJobPosition
             {
-                PostedJobPositionStatusType = PostedJobPositionStatusType.Active,
-                PartyType = PartyType.Administrator,
-                EmploymentType = EmploymentType.SalariedFullTime,
                 Title = "Development President",
                 Description = "President of Development",
+                PostedJobPositionStatusType = PostedJobPositionStatusType.Active,
+                PartyType = PartyType.Administrator,
+                EmploymentType = EmploymentType.SalariedFullTime,                
                 Compensation = 153000,
                 CompensationType = CompensationType.Annually,
                 HasBenefits = true,
-                Category = new PostedJobPositionCategory { JobPositionType = JobPositionType.DevelopmentDirector },
-                DateCreated = DateTime.UtcNow
+                StartDate = new DateTime(2017, 01, 01),
+                DateCreated = DateTime.UtcNow,
+                Category = new PostedJobPositionCategory { JobPositionType = JobPositionType.DevelopmentDirector }
             };
 
             using (var context = new WaldorfContext())

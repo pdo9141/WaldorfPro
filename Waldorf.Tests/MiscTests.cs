@@ -9,13 +9,13 @@ namespace Waldorf.Tests
     public class MiscTests
     {
         [TestMethod]
-        public void Config_Section_Test()
+        public void Misc_Config_Section_Test()
         {
             var cacheServerConfiguration = (CacheServerConfiguration)ConfigurationManager.GetSection("CacheServerConfiguration");
         }
 
         [TestMethod]
-        public void EncryptionHelper_Test()
+        public void Misc_EncryptionHelper_Test()
         {
             string plain = "1111222233334444";
             string encrypted = EncryptionHelper.Encrypt<RijndaelManaged>(plain, "password", "salt");
