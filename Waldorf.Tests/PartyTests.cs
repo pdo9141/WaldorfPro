@@ -29,8 +29,7 @@ namespace Waldorf.Tests
                     .Include(p => p.PartyTypes)
                     .Include(p => p.Graduates)
                     .Include(p => p.Undergraduates)
-                    .Include(p => p.StateCredentials)
-                    .Include(p => p.WaldorfTeachingCertifications)
+                    .Include(p => p.StateCredentials)                    
                     .Include(p => p.OccupationalCertifications)
                     .Include("JobPositionsOfInterest.JobPositionTierOneCategory.JobPositionTierTwoCategory").AsNoTracking().ToList();
 
@@ -75,8 +74,7 @@ namespace Waldorf.Tests
                     context.Entry(party).Reference(p => p.CreditCard).Load();
                     context.Entry(party).Collection(p => p.Graduates).Load();
                     context.Entry(party).Collection(p => p.Undergraduates).Load();
-                    context.Entry(party).Collection(p => p.StateCredentials).Load();
-                    context.Entry(party).Collection(p => p.WaldorfTeachingCertifications).Load();
+                    context.Entry(party).Collection(p => p.StateCredentials).Load();                    
                     context.Entry(party).Collection(p => p.OccupationalCertifications).Load();
                 }
                 
@@ -88,6 +86,7 @@ namespace Waldorf.Tests
         [TestMethod]
         public void Party_Insert_Teacher_Test()
         {
+            #region Party
             var party = new Party
             {
                 PartyStatusType = PartyStatusType.Pending,
@@ -102,14 +101,15 @@ namespace Waldorf.Tests
                 UserId = "1",
                 AllowSchoolMatchWithoutApproval = false
             };
+            #endregion
 
-            #region Add Party Type
+            #region Party Type
             var partyTypes = new HashSet<PartyTypeWrapper>();
             partyTypes.Add(PartyType.Teacher);
             party.PartyTypes = partyTypes;
             #endregion
 
-            #region Add Positions of Interest
+            #region Positions of Interest
             var jobPositionsOfInterest = new HashSet<JobPositionWrapper>();
             jobPositionsOfInterest.Add(new JobPositionWrapper
             {
@@ -127,7 +127,7 @@ namespace Waldorf.Tests
             party.JobPositionsOfInterest = jobPositionsOfInterest;
             #endregion
 
-            #region Add Favorited Posted Job Positions
+            #region Favorited Posted Job Positions
             #endregion
 
             #region Approved Match Posted Job Positions
@@ -159,7 +159,6 @@ namespace Waldorf.Tests
                 TranscriptFileName = String.Format("Transcript_{0}.pdf", Guid.NewGuid())
             });
             party.Graduates = graduates;
-
             #endregion
 
             #region State Credentials
@@ -182,14 +181,13 @@ namespace Waldorf.Tests
                 DocumentationFileName = String.Format("Documentation_{0}.pdf", Guid.NewGuid())
             });
             party.OccupationalCertifications = occupationalCertifications;
-
             #endregion
 
             #region Waldorf Teaching Certifications
-            var waldorfTeachingCertifications = new HashSet<WaldorfTeachingCertificationTypeWrapper>();
-            waldorfTeachingCertifications.Add(new WaldorfTeachingCertificationTypeWrapper { WaldorfTeachingCertificationType = WaldorfTeachingCertificationType.GradesTeaching });
-            waldorfTeachingCertifications.Add(new WaldorfTeachingCertificationTypeWrapper { WaldorfTeachingCertificationType = WaldorfTeachingCertificationType.EarlyChildhoodTeaching });
-            party.WaldorfTeachingCertifications = waldorfTeachingCertifications;
+            var completedWaldorfTeachingCertifications = new HashSet<CompletedWaldorfTeachingCertificationTypeWrapper>();
+            completedWaldorfTeachingCertifications.Add(new CompletedWaldorfTeachingCertificationTypeWrapper { WaldorfTeachingCertificationType = WaldorfTeachingCertificationType.GradesTeaching });
+            completedWaldorfTeachingCertifications.Add(new CompletedWaldorfTeachingCertificationTypeWrapper { WaldorfTeachingCertificationType = WaldorfTeachingCertificationType.EarlyChildhoodTeaching });
+            party.CompletedWaldorfTeachingCertifications = completedWaldorfTeachingCertifications;
             #endregion
 
             #region Recommendation Letters
@@ -227,7 +225,161 @@ namespace Waldorf.Tests
                 context.SaveChanges();
             }
         }
-        
+
+        [TestMethod]
+        public void Party_Insert_Admin_Test()
+        {
+            #region Party
+            var party = new Party
+            {
+                PartyStatusType = PartyStatusType.Pending,
+                FirstName = "Kate",
+                LastName = "Beckinsale",
+                EmailAddress = "kbeckinsale@gmail.com",
+                ZipCode = "92843",
+                PreferredName = "Classy Lady",
+                DateCreated = DateTime.UtcNow,
+                WaldorfTranscriptFileName = String.Format("WaldorfTranscript_{0}.pdf", Guid.NewGuid()),
+                ProfileImageName = String.Format("ProfileImage_{0}.jpg", Guid.NewGuid()),
+                UserId = "2",
+                AnthroposophicalFoundationalStudies = true,
+                AllowSchoolMatchWithoutApproval = true,
+                AnyWaldorfAdminCertUnitsCompleted = true
+            };
+            #endregion
+
+            #region Party Type
+            var partyTypes = new HashSet<PartyTypeWrapper>();
+            partyTypes.Add(PartyType.Administrator);
+            party.PartyTypes = partyTypes;
+            #endregion
+
+            #region Positions of Interest
+            var jobPositionsOfInterest = new HashSet<JobPositionWrapper>();
+            jobPositionsOfInterest.Add(new JobPositionWrapper { JobPositionType = JobPositionType.Enrollment });
+            jobPositionsOfInterest.Add(new JobPositionWrapper { JobPositionType = JobPositionType.OfficeSupport });
+            party.JobPositionsOfInterest = jobPositionsOfInterest;
+            #endregion
+
+            #region Favorited Posted Job Positions
+            #endregion
+
+            #region Approved Match Posted Job Positions
+            #endregion
+
+            #region Undergraduates
+            var undergraduates = new HashSet<Undergraduate>();
+            undergraduates.Add(new Undergraduate
+            {
+                SchoolName = "USC",
+                City = "Los Angeles",
+                State = StateAbbreviation.CA,
+                Degree = DegreeType.BA,
+                Major = "Sociology",
+                TranscriptFileName = String.Format("Transcript_{0}.pdf", Guid.NewGuid())
+            });
+            party.Undergraduates = undergraduates;
+            #endregion
+
+            #region Graduates
+            #endregion
+
+            #region State Credentials
+            #endregion
+
+            #region Occupational Certifications
+            #endregion
+
+            #region Waldorf Teaching Certifications
+            var completedWaldorfTeachingCertifications = new HashSet<CompletedWaldorfTeachingCertificationTypeWrapper>();
+            completedWaldorfTeachingCertifications.Add(new CompletedWaldorfTeachingCertificationTypeWrapper { WaldorfTeachingCertificationType = WaldorfTeachingCertificationType.Administrator });
+            party.CompletedWaldorfTeachingCertifications = completedWaldorfTeachingCertifications;
+            #endregion
+
+            #region Partial Waldorf Teaching Certifications
+            var partialWaldorfTeachingCertifications = new HashSet<PartialWaldorfTeachingCertificationTypeWrapper>();
+            partialWaldorfTeachingCertifications.Add(new PartialWaldorfTeachingCertificationTypeWrapper { WaldorfTeachingCertificationType = WaldorfTeachingCertificationType.MAWaldorfEducation });
+            party.PartialWaldorfTeachingCertifications = partialWaldorfTeachingCertifications;
+            #endregion
+
+            #region Recommendation Letters
+            var recommendationLetters = new HashSet<RecommendationLetter>();
+            recommendationLetters.Add(new RecommendationLetter { FileName = String.Format("Recommendation_{0}.pdf", Guid.NewGuid()) });
+            party.RecommendationLetters = recommendationLetters;
+            #endregion
+
+            #region Evaluations
+            var evaluations = new HashSet<Evaluation>();
+            evaluations.Add(new Evaluation { FileName = String.Format("Evaluation_{0}.pdf", Guid.NewGuid()) });
+            party.Evaluations = evaluations;
+            #endregion
+
+            #region Teaching Experience
+            #endregion
+
+            #region Administrator Experience
+            var administratorExperience = new HashSet<AdministratorExperience>();
+            administratorExperience.Add(new AdministratorExperience
+            {
+                Institution = "TLC",
+                Position = "Main Assistant",
+                StartDate = new DateTime(2000, 10, 10),
+                EndDate = new DateTime(2001, 11, 10),
+                ResponsibilitiesDuties = "Phone calls, fetch lunch."
+            });
+            party.AdministratorExperience = administratorExperience;
+            #endregion
+
+            #region Volunteer Relevant Experience
+            var volunteerExperience = new HashSet<VolunteerRelevantExperience>();
+            volunteerExperience.Add(new VolunteerRelevantExperience
+            {
+                Institution = "Love Shelter",
+                Position = "Food Coordinator",
+                StartDate = new DateTime(2002, 1, 8),
+                EndDate = new DateTime(2004, 2, 14),
+                ResponsibilitiesDuties = "Prepare lunch."
+            });
+            party.VolunteerRelevantExperience = volunteerExperience;
+            #endregion
+
+            #region Credit Card
+            #endregion
+
+            using (var context = new WaldorfContext())
+            {
+                context.Parties.Add(party);
+                context.SaveChanges();
+            }
+        }
+
+        [TestMethod]
+        public void Party_Insert_ApprovedMatchPostedJobPositions_Test()
+        {
+            using (var context = new WaldorfContext())
+            {
+                var party = context.Parties.FirstOrDefault(p => p.EmailAddress == "mfox@yahoo.com");
+                var postedJobPosition = context.PostedJobPositions.Find(5);
+                party.ApprovedMatchPostedJobPositions.Add(new ApprovedMatchPostedJobPosition
+                {
+                    PostedJobPositionId = postedJobPosition.Id
+                });
+                context.SaveChanges();
+            }
+        }
+
+        [TestMethod]
+        public void Party_Delete_Test()
+        {
+            var partyId = 2;
+            using (var context = new WaldorfContext())
+            {
+                var party = context.Parties.Find(partyId);
+                context.Parties.Remove(party);
+                context.SaveChanges();
+            }
+        }
+
         private void BenchmarkQueries()
         {
             /*

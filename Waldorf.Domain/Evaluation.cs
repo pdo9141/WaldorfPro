@@ -9,5 +9,7 @@ namespace Waldorf.Domain
 
         [StringLength(100)]
         public string FileName { get; set; }
+
+        public long PartyId { get; set; }
     }
 }

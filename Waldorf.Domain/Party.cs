@@ -16,9 +16,14 @@ namespace Waldorf.Domain
             Graduates = new HashSet<Graduate>();
             StateCredentials = new HashSet<StateCredential>();
             OccupationalCertifications = new HashSet<OccupationalCertification>();
-            WaldorfTeachingCertifications = new HashSet<WaldorfTeachingCertificationTypeWrapper>();
+            CompletedWaldorfTeachingCertifications = new HashSet<CompletedWaldorfTeachingCertificationTypeWrapper>();
+            PartialWaldorfTeachingCertifications = new HashSet<PartialWaldorfTeachingCertificationTypeWrapper>();
             RecommendationLetters = new HashSet<RecommendationLetter>();
             Evaluations = new HashSet<Evaluation>();
+            ApprovedMatchPostedJobPositions = new HashSet<ApprovedMatchPostedJobPosition>();
+            TeachingExperience = new HashSet<TeachingExperience>();
+            AdministratorExperience = new HashSet<AdministratorExperience>();
+            VolunteerRelevantExperience = new HashSet<VolunteerRelevantExperience>();
         }
 
         public long Id { get; set; }
@@ -60,7 +65,11 @@ namespace Waldorf.Domain
 
         public ICollection<OccupationalCertification> OccupationalCertifications { get; set; }
 
-        public ICollection<WaldorfTeachingCertificationTypeWrapper> WaldorfTeachingCertifications { get; set; }
+        public bool AnthroposophicalFoundationalStudies { get; set; }
+
+        public ICollection<CompletedWaldorfTeachingCertificationTypeWrapper> CompletedWaldorfTeachingCertifications { get; set; }
+
+        public ICollection<PartialWaldorfTeachingCertificationTypeWrapper> PartialWaldorfTeachingCertifications { get; set; }
 
         public ICollection<RecommendationLetter> RecommendationLetters { get; set; }
 
@@ -72,6 +81,17 @@ namespace Waldorf.Domain
         
         [StringLength(100)]
         public string WaldorfTranscriptFileName { get; set; }
+
+        public bool AnyWaldorfAdminCertUnitsCompleted { get; set; }
+
+        public ICollection<TeachingExperience> TeachingExperience { get; set; }
+
+        public ICollection<AdministratorExperience> AdministratorExperience { get; set; }
+
+        public ICollection<VolunteerRelevantExperience> VolunteerRelevantExperience { get; set; }
+
+        [StringLength(100)]
+        public string BiographyFileName { get; set; }
 
         [StringLength(75)]
         [Required]

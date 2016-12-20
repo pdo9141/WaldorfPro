@@ -17,7 +17,11 @@ namespace Waldorf.DataModel.Migrations
                         LastName = c.String(nullable: false, maxLength: 50),
                         EmailAddress = c.String(nullable: false, maxLength: 75),
                         ZipCode = c.String(nullable: false, maxLength: 10),
+                        AnthroposophicalFoundationalStudies = c.Boolean(nullable: false),
+                        AllowSchoolMatchWithoutApproval = c.Boolean(nullable: false),
                         WaldorfTranscriptFileName = c.String(maxLength: 100),
+                        AnyWaldorfAdminCertUnitsCompleted = c.Boolean(nullable: false),
+                        BiographyFileName = c.String(maxLength: 100),
                         PreferredName = c.String(nullable: false, maxLength: 75),
                         ProfileImageName = c.String(maxLength: 100),
                         UserId = c.String(nullable: false, maxLength: 128),
@@ -27,6 +31,46 @@ namespace Waldorf.DataModel.Migrations
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.CreditCards", t => t.CreditCard_Id)
                 .Index(t => t.CreditCard_Id);
+            
+            CreateTable(
+                "dbo.AdministratorExperiences",
+                c => new
+                    {
+                        Id = c.Long(nullable: false, identity: true),
+                        Institution = c.String(nullable: false, maxLength: 50),
+                        Position = c.String(nullable: false, maxLength: 50),
+                        StartDate = c.DateTime(nullable: false),
+                        EndDate = c.DateTime(nullable: false),
+                        ResponsibilitiesDuties = c.String(maxLength: 1000),
+                        PartyId = c.Long(nullable: false),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.Parties", t => t.PartyId, cascadeDelete: true)
+                .Index(t => t.PartyId);
+            
+            CreateTable(
+                "dbo.ApprovedMatchPostedJobPositions",
+                c => new
+                    {
+                        Id = c.Long(nullable: false, identity: true),
+                        PostedJobPositionId = c.Long(nullable: false),
+                        PartyId = c.Long(nullable: false),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.Parties", t => t.PartyId, cascadeDelete: true)
+                .Index(t => t.PartyId);
+            
+            CreateTable(
+                "dbo.CompletedWaldorfTeachingCertificationTypeWrappers",
+                c => new
+                    {
+                        Id = c.Long(nullable: false, identity: true),
+                        PartyId = c.Long(nullable: false),
+                        WaldorfTeachingCertificationType = c.Int(nullable: false),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.Parties", t => t.PartyId, cascadeDelete: true)
+                .Index(t => t.PartyId);
             
             CreateTable(
                 "dbo.CreditCards",
@@ -51,11 +95,11 @@ namespace Waldorf.DataModel.Migrations
                     {
                         Id = c.Long(nullable: false, identity: true),
                         FileName = c.String(maxLength: 100),
-                        Party_Id = c.Long(),
+                        PartyId = c.Long(nullable: false),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.Parties", t => t.Party_Id)
-                .Index(t => t.Party_Id);
+                .ForeignKey("dbo.Parties", t => t.PartyId, cascadeDelete: true)
+                .Index(t => t.PartyId);
             
             CreateTable(
                 "dbo.FavoritedPostedJobPositions",
@@ -63,11 +107,11 @@ namespace Waldorf.DataModel.Migrations
                     {
                         Id = c.Long(nullable: false, identity: true),
                         PostedJobPositionId = c.Long(nullable: false),
-                        Party_Id = c.Long(),
+                        PartyId = c.Long(nullable: false),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.Parties", t => t.Party_Id)
-                .Index(t => t.Party_Id);
+                .ForeignKey("dbo.Parties", t => t.PartyId, cascadeDelete: true)
+                .Index(t => t.PartyId);
             
             CreateTable(
                 "dbo.Graduates",
@@ -79,11 +123,11 @@ namespace Waldorf.DataModel.Migrations
                         State = c.Int(nullable: false),
                         DegreeEmphasis = c.String(nullable: false, maxLength: 100),
                         TranscriptFileName = c.String(maxLength: 100),
-                        Party_Id = c.Long(),
+                        PartyId = c.Long(nullable: false),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.Parties", t => t.Party_Id)
-                .Index(t => t.Party_Id);
+                .ForeignKey("dbo.Parties", t => t.PartyId, cascadeDelete: true)
+                .Index(t => t.PartyId);
             
             CreateTable(
                 "dbo.JobPositionWrappers",
@@ -129,11 +173,23 @@ namespace Waldorf.DataModel.Migrations
                         Name = c.String(nullable: false, maxLength: 100),
                         State = c.Int(nullable: false),
                         DocumentationFileName = c.String(maxLength: 100),
-                        Party_Id = c.Long(),
+                        PartyId = c.Long(nullable: false),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.Parties", t => t.Party_Id)
-                .Index(t => t.Party_Id);
+                .ForeignKey("dbo.Parties", t => t.PartyId, cascadeDelete: true)
+                .Index(t => t.PartyId);
+            
+            CreateTable(
+                "dbo.PartialWaldorfTeachingCertificationTypeWrappers",
+                c => new
+                    {
+                        Id = c.Long(nullable: false, identity: true),
+                        PartyId = c.Long(nullable: false),
+                        WaldorfTeachingCertificationType = c.Int(nullable: false),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.Parties", t => t.PartyId, cascadeDelete: true)
+                .Index(t => t.PartyId);
             
             CreateTable(
                 "dbo.PartyTypeWrappers",
@@ -153,11 +209,11 @@ namespace Waldorf.DataModel.Migrations
                     {
                         Id = c.Long(nullable: false, identity: true),
                         FileName = c.String(maxLength: 100),
-                        Party_Id = c.Long(),
+                        PartyId = c.Long(nullable: false),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.Parties", t => t.Party_Id)
-                .Index(t => t.Party_Id);
+                .ForeignKey("dbo.Parties", t => t.PartyId, cascadeDelete: true)
+                .Index(t => t.PartyId);
             
             CreateTable(
                 "dbo.StateCredentials",
@@ -167,11 +223,27 @@ namespace Waldorf.DataModel.Migrations
                         Name = c.String(nullable: false, maxLength: 100),
                         State = c.Int(nullable: false),
                         DocumentationFileName = c.String(maxLength: 100),
-                        Party_Id = c.Long(),
+                        PartyId = c.Long(nullable: false),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.Parties", t => t.Party_Id)
-                .Index(t => t.Party_Id);
+                .ForeignKey("dbo.Parties", t => t.PartyId, cascadeDelete: true)
+                .Index(t => t.PartyId);
+            
+            CreateTable(
+                "dbo.TeachingExperiences",
+                c => new
+                    {
+                        Id = c.Long(nullable: false, identity: true),
+                        Institution = c.String(nullable: false, maxLength: 50),
+                        Position = c.String(nullable: false, maxLength: 50),
+                        StartDate = c.DateTime(nullable: false),
+                        EndDate = c.DateTime(nullable: false),
+                        ResponsibilitiesDuties = c.String(maxLength: 1000),
+                        PartyId = c.Long(nullable: false),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.Parties", t => t.PartyId, cascadeDelete: true)
+                .Index(t => t.PartyId);
             
             CreateTable(
                 "dbo.Undergraduates",
@@ -185,23 +257,76 @@ namespace Waldorf.DataModel.Migrations
                         Major = c.String(nullable: false, maxLength: 100),
                         Minor = c.String(maxLength: 100),
                         TranscriptFileName = c.String(maxLength: 100),
-                        Party_Id = c.Long(),
-                    })
-                .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.Parties", t => t.Party_Id)
-                .Index(t => t.Party_Id);
-            
-            CreateTable(
-                "dbo.WaldorfTeachingCertificationTypeWrappers",
-                c => new
-                    {
-                        Id = c.Long(nullable: false, identity: true),
-                        WaldorfTeachingCertificationType = c.Int(nullable: false),
                         PartyId = c.Long(nullable: false),
                     })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.Parties", t => t.PartyId, cascadeDelete: true)
                 .Index(t => t.PartyId);
+            
+            CreateTable(
+                "dbo.VolunteerRelevantExperiences",
+                c => new
+                    {
+                        Id = c.Long(nullable: false, identity: true),
+                        Institution = c.String(nullable: false, maxLength: 50),
+                        Position = c.String(nullable: false, maxLength: 50),
+                        StartDate = c.DateTime(nullable: false),
+                        EndDate = c.DateTime(nullable: false),
+                        ResponsibilitiesDuties = c.String(maxLength: 1000),
+                        PartyId = c.Long(nullable: false),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.Parties", t => t.PartyId, cascadeDelete: true)
+                .Index(t => t.PartyId);
+            
+            CreateTable(
+                "dbo.PostedJobPositions",
+                c => new
+                    {
+                        Id = c.Long(nullable: false, identity: true),
+                        SchoolId = c.Int(nullable: false),
+                        PostedJobPositionStatusType = c.Int(nullable: false),
+                        PartyType = c.Int(nullable: false),
+                        EmploymentType = c.Int(nullable: false),
+                        Title = c.String(maxLength: 50),
+                        Description = c.String(maxLength: 100),
+                        Compensation = c.Decimal(nullable: false, precision: 18, scale: 2),
+                        CompensationType = c.Int(nullable: false),
+                        HasBenefits = c.Boolean(nullable: false),
+                        StartDate = c.DateTime(nullable: false),
+                        DateFilled = c.DateTime(),
+                        DateCreated = c.DateTime(nullable: false),
+                        Category_Id = c.Long(),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.PostedJobPositionCategories", t => t.Category_Id)
+                .ForeignKey("dbo.Schools", t => t.SchoolId, cascadeDelete: true)
+                .Index(t => t.SchoolId)
+                .Index(t => t.Category_Id);
+            
+            CreateTable(
+                "dbo.PostedJobPositionCategories",
+                c => new
+                    {
+                        Id = c.Long(nullable: false, identity: true),
+                        JobPositionType = c.Int(nullable: false),
+                        JobPositionTierOneCategory_Id = c.Long(),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.JobPositionTierOneCategories", t => t.JobPositionTierOneCategory_Id)
+                .Index(t => t.JobPositionTierOneCategory_Id);
+            
+            CreateTable(
+                "dbo.FavoritedParties",
+                c => new
+                    {
+                        Id = c.Long(nullable: false, identity: true),
+                        PartyId = c.Long(nullable: false),
+                        PostedJobPosition_Id = c.Long(),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.PostedJobPositions", t => t.PostedJobPosition_Id)
+                .Index(t => t.PostedJobPosition_Id);
             
             CreateTable(
                 "dbo.Schools",
@@ -241,55 +366,6 @@ namespace Waldorf.DataModel.Migrations
                 .PrimaryKey(t => t.Id);
             
             CreateTable(
-                "dbo.PostedJobPositions",
-                c => new
-                    {
-                        Id = c.Long(nullable: false, identity: true),
-                        SchoolId = c.Int(nullable: false),
-                        PostedJobPositionStatusType = c.Int(nullable: false),
-                        PartyType = c.Int(nullable: false),
-                        EmploymentType = c.Int(nullable: false),
-                        Title = c.String(maxLength: 50),
-                        Description = c.String(maxLength: 100),
-                        Compensation = c.Decimal(nullable: false, precision: 18, scale: 2),
-                        CompensationType = c.Int(nullable: false),
-                        HasBenefits = c.Boolean(nullable: false),
-                        StartDate = c.DateTime(nullable: false),
-                        DateFilled = c.DateTime(nullable: false),
-                        DateCreated = c.DateTime(nullable: false),
-                        Category_Id = c.Long(),
-                    })
-                .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.PostedJobPositionCategories", t => t.Category_Id)
-                .ForeignKey("dbo.Schools", t => t.SchoolId, cascadeDelete: true)
-                .Index(t => t.SchoolId)
-                .Index(t => t.Category_Id);
-            
-            CreateTable(
-                "dbo.PostedJobPositionCategories",
-                c => new
-                    {
-                        Id = c.Long(nullable: false, identity: true),
-                        JobPositionType = c.Int(nullable: false),
-                        JobPositionTierOneCategory_Id = c.Long(),
-                    })
-                .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.JobPositionTierOneCategories", t => t.JobPositionTierOneCategory_Id)
-                .Index(t => t.JobPositionTierOneCategory_Id);
-            
-            CreateTable(
-                "dbo.FavoritedParties",
-                c => new
-                    {
-                        Id = c.Long(nullable: false, identity: true),
-                        PartyId = c.Long(nullable: false),
-                        PostedJobPosition_Id = c.Long(),
-                    })
-                .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.PostedJobPositions", t => t.PostedJobPosition_Id)
-                .Index(t => t.PostedJobPosition_Id);
-            
-            CreateTable(
                 "dbo.SchoolDescriptionTypeWrappers",
                 c => new
                     {
@@ -307,55 +383,67 @@ namespace Waldorf.DataModel.Migrations
         {
             DropForeignKey("dbo.SchoolDescriptionTypeWrappers", "SchoolId", "dbo.Schools");
             DropForeignKey("dbo.PostedJobPositions", "SchoolId", "dbo.Schools");
+            DropForeignKey("dbo.Schools", "CreditCard_Id", "dbo.CreditCards");
+            DropForeignKey("dbo.Schools", "Address_Id", "dbo.Addresses");
             DropForeignKey("dbo.FavoritedParties", "PostedJobPosition_Id", "dbo.PostedJobPositions");
             DropForeignKey("dbo.PostedJobPositions", "Category_Id", "dbo.PostedJobPositionCategories");
             DropForeignKey("dbo.PostedJobPositionCategories", "JobPositionTierOneCategory_Id", "dbo.JobPositionTierOneCategories");
-            DropForeignKey("dbo.Schools", "CreditCard_Id", "dbo.CreditCards");
-            DropForeignKey("dbo.Schools", "Address_Id", "dbo.Addresses");
-            DropForeignKey("dbo.WaldorfTeachingCertificationTypeWrappers", "PartyId", "dbo.Parties");
-            DropForeignKey("dbo.Undergraduates", "Party_Id", "dbo.Parties");
-            DropForeignKey("dbo.StateCredentials", "Party_Id", "dbo.Parties");
-            DropForeignKey("dbo.RecommendationLetters", "Party_Id", "dbo.Parties");
+            DropForeignKey("dbo.VolunteerRelevantExperiences", "PartyId", "dbo.Parties");
+            DropForeignKey("dbo.Undergraduates", "PartyId", "dbo.Parties");
+            DropForeignKey("dbo.TeachingExperiences", "PartyId", "dbo.Parties");
+            DropForeignKey("dbo.StateCredentials", "PartyId", "dbo.Parties");
+            DropForeignKey("dbo.RecommendationLetters", "PartyId", "dbo.Parties");
             DropForeignKey("dbo.PartyTypeWrappers", "PartyId", "dbo.Parties");
-            DropForeignKey("dbo.OccupationalCertifications", "Party_Id", "dbo.Parties");
+            DropForeignKey("dbo.PartialWaldorfTeachingCertificationTypeWrappers", "PartyId", "dbo.Parties");
+            DropForeignKey("dbo.OccupationalCertifications", "PartyId", "dbo.Parties");
             DropForeignKey("dbo.JobPositionWrappers", "PartyId", "dbo.Parties");
             DropForeignKey("dbo.JobPositionWrappers", "JobPositionTierOneCategory_Id", "dbo.JobPositionTierOneCategories");
             DropForeignKey("dbo.JobPositionTierOneCategories", "JobPositionTierTwoCategory_Id", "dbo.JobPositionTierTwoCategories");
-            DropForeignKey("dbo.Graduates", "Party_Id", "dbo.Parties");
-            DropForeignKey("dbo.FavoritedPostedJobPositions", "Party_Id", "dbo.Parties");
-            DropForeignKey("dbo.Evaluations", "Party_Id", "dbo.Parties");
+            DropForeignKey("dbo.Graduates", "PartyId", "dbo.Parties");
+            DropForeignKey("dbo.FavoritedPostedJobPositions", "PartyId", "dbo.Parties");
+            DropForeignKey("dbo.Evaluations", "PartyId", "dbo.Parties");
             DropForeignKey("dbo.Parties", "CreditCard_Id", "dbo.CreditCards");
+            DropForeignKey("dbo.CompletedWaldorfTeachingCertificationTypeWrappers", "PartyId", "dbo.Parties");
+            DropForeignKey("dbo.ApprovedMatchPostedJobPositions", "PartyId", "dbo.Parties");
+            DropForeignKey("dbo.AdministratorExperiences", "PartyId", "dbo.Parties");
             DropIndex("dbo.SchoolDescriptionTypeWrappers", new[] { "SchoolId" });
+            DropIndex("dbo.Schools", new[] { "CreditCard_Id" });
+            DropIndex("dbo.Schools", new[] { "Address_Id" });
             DropIndex("dbo.FavoritedParties", new[] { "PostedJobPosition_Id" });
             DropIndex("dbo.PostedJobPositionCategories", new[] { "JobPositionTierOneCategory_Id" });
             DropIndex("dbo.PostedJobPositions", new[] { "Category_Id" });
             DropIndex("dbo.PostedJobPositions", new[] { "SchoolId" });
-            DropIndex("dbo.Schools", new[] { "CreditCard_Id" });
-            DropIndex("dbo.Schools", new[] { "Address_Id" });
-            DropIndex("dbo.WaldorfTeachingCertificationTypeWrappers", new[] { "PartyId" });
-            DropIndex("dbo.Undergraduates", new[] { "Party_Id" });
-            DropIndex("dbo.StateCredentials", new[] { "Party_Id" });
-            DropIndex("dbo.RecommendationLetters", new[] { "Party_Id" });
+            DropIndex("dbo.VolunteerRelevantExperiences", new[] { "PartyId" });
+            DropIndex("dbo.Undergraduates", new[] { "PartyId" });
+            DropIndex("dbo.TeachingExperiences", new[] { "PartyId" });
+            DropIndex("dbo.StateCredentials", new[] { "PartyId" });
+            DropIndex("dbo.RecommendationLetters", new[] { "PartyId" });
             DropIndex("dbo.PartyTypeWrappers", new[] { "PartyId" });
-            DropIndex("dbo.OccupationalCertifications", new[] { "Party_Id" });
+            DropIndex("dbo.PartialWaldorfTeachingCertificationTypeWrappers", new[] { "PartyId" });
+            DropIndex("dbo.OccupationalCertifications", new[] { "PartyId" });
             DropIndex("dbo.JobPositionTierOneCategories", new[] { "JobPositionTierTwoCategory_Id" });
             DropIndex("dbo.JobPositionWrappers", new[] { "JobPositionTierOneCategory_Id" });
             DropIndex("dbo.JobPositionWrappers", new[] { "PartyId" });
-            DropIndex("dbo.Graduates", new[] { "Party_Id" });
-            DropIndex("dbo.FavoritedPostedJobPositions", new[] { "Party_Id" });
-            DropIndex("dbo.Evaluations", new[] { "Party_Id" });
+            DropIndex("dbo.Graduates", new[] { "PartyId" });
+            DropIndex("dbo.FavoritedPostedJobPositions", new[] { "PartyId" });
+            DropIndex("dbo.Evaluations", new[] { "PartyId" });
+            DropIndex("dbo.CompletedWaldorfTeachingCertificationTypeWrappers", new[] { "PartyId" });
+            DropIndex("dbo.ApprovedMatchPostedJobPositions", new[] { "PartyId" });
+            DropIndex("dbo.AdministratorExperiences", new[] { "PartyId" });
             DropIndex("dbo.Parties", new[] { "CreditCard_Id" });
             DropTable("dbo.SchoolDescriptionTypeWrappers");
+            DropTable("dbo.Addresses");
+            DropTable("dbo.Schools");
             DropTable("dbo.FavoritedParties");
             DropTable("dbo.PostedJobPositionCategories");
             DropTable("dbo.PostedJobPositions");
-            DropTable("dbo.Addresses");
-            DropTable("dbo.Schools");
-            DropTable("dbo.WaldorfTeachingCertificationTypeWrappers");
+            DropTable("dbo.VolunteerRelevantExperiences");
             DropTable("dbo.Undergraduates");
+            DropTable("dbo.TeachingExperiences");
             DropTable("dbo.StateCredentials");
             DropTable("dbo.RecommendationLetters");
             DropTable("dbo.PartyTypeWrappers");
+            DropTable("dbo.PartialWaldorfTeachingCertificationTypeWrappers");
             DropTable("dbo.OccupationalCertifications");
             DropTable("dbo.JobPositionTierTwoCategories");
             DropTable("dbo.JobPositionTierOneCategories");
@@ -364,6 +452,9 @@ namespace Waldorf.DataModel.Migrations
             DropTable("dbo.FavoritedPostedJobPositions");
             DropTable("dbo.Evaluations");
             DropTable("dbo.CreditCards");
+            DropTable("dbo.CompletedWaldorfTeachingCertificationTypeWrappers");
+            DropTable("dbo.ApprovedMatchPostedJobPositions");
+            DropTable("dbo.AdministratorExperiences");
             DropTable("dbo.Parties");
         }
     }

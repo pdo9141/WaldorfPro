@@ -16,5 +16,7 @@ namespace Waldorf.Domain
 
         [StringLength(100)]
         public string DocumentationFileName { get; set; }
+
+        public long PartyId { get; set; }
     }
 }

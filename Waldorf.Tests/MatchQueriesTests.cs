@@ -22,6 +22,7 @@ namespace Waldorf.Tests
                     (from pjp in context.PostedJobPositions
                      from p in context.Parties
                      where pjp.Id == postedJobPositionId                    
+                     && (p.AllowSchoolMatchWithoutApproval == true || p.ApprovedMatchPostedJobPositions.Any(ampjp => ampjp.PostedJobPositionId == postedJobPositionId))
                      && p.JobPositionsOfInterest.Any(jpoi => jpoi.JobPositionType == pjp.Category.JobPositionType 
                         && jpoi.JobPositionTierOneCategory.JobPositionTierOneCategoryType == pjp.Category.JobPositionTierOneCategory.JobPositionTierOneCategoryType
                         && jpoi.JobPositionTierOneCategory.JobPositionTierTwoCategory.JobPositionTierTwoCategoryType == pjp.Category.JobPositionTierOneCategory.JobPositionTierTwoCategory.JobPositionTierTwoCategoryType)

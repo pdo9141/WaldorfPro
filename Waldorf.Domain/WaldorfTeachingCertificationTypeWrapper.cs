@@ -6,10 +6,10 @@ namespace Waldorf.Domain
     {
         public long Id { get; set; }
 
-        public WaldorfTeachingCertificationType WaldorfTeachingCertificationType { get; set; }
-
         public long PartyId { get; set; }
 
+        public WaldorfTeachingCertificationType WaldorfTeachingCertificationType { get; set; }
+        
         public static implicit operator WaldorfTeachingCertificationType(WaldorfTeachingCertificationTypeWrapper val)
         {
             return val.WaldorfTeachingCertificationType;

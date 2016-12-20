@@ -13,7 +13,7 @@ namespace Waldorf.DataModel.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201611270341018_Initial"; }
+            get { return "201612200536221_Initial"; }
         }
         
         string IMigrationMetadata.Source

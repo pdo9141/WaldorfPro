@@ -25,5 +25,7 @@ namespace Waldorf.Domain
 
         [StringLength(100)]
         public string TranscriptFileName { get; set; }
+
+        public long PartyId { get; set; }
     }
 }
