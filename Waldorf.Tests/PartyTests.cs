@@ -204,6 +204,35 @@ namespace Waldorf.Tests
             party.Evaluations = evaluations;
             #endregion
 
+            #region Teaching Experience
+            var teachingExperience = new HashSet<TeachingExperience>();
+            teachingExperience.Add(new TeachingExperience
+            {
+                Institution = "The Learning Center",
+                Position = "Kids Director",
+                StartDate = new DateTime(2010, 1, 1),
+                EndDate = new DateTime(2012, 6, 1),
+                ResponsibilitiesDuties = "Direct Kids."
+            });
+            party.TeachingExperience = teachingExperience;
+            #endregion
+
+            #region Administrator Experience
+            #endregion
+
+            #region Volunteer Relevant Experience
+            var volunteerExperience = new HashSet<VolunteerRelevantExperience>();
+            volunteerExperience.Add(new VolunteerRelevantExperience
+            {
+                Institution = "GG Homeless Shelter",
+                Position = "Food Manager",
+                StartDate = new DateTime(2014, 10, 1),
+                EndDate = new DateTime(2014, 12, 1),
+                ResponsibilitiesDuties = "Manage lunch."
+            });
+            party.VolunteerRelevantExperience = volunteerExperience;
+            #endregion
+
             #region Credit Card
             party.CreditCard = new CreditCard
             {
@@ -371,12 +400,37 @@ namespace Waldorf.Tests
         [TestMethod]
         public void Party_Delete_Test()
         {
-            var partyId = 2;
+            var partyId = 4;
             using (var context = new WaldorfContext())
             {
-                var party = context.Parties.Find(partyId);
-                context.Parties.Remove(party);
-                context.SaveChanges();
+                var party = context.Parties.Where(p => p.Id == partyId)
+                    .Include(p => p.CreditCard)
+                    .Include("JobPositionsOfInterest.JobPositionTierOneCategory.JobPositionTierTwoCategory")
+                    .FirstOrDefault();
+
+                if (party != null)
+                {
+                    if (party.CreditCard != null)
+                        context.Entry(party.CreditCard).State = EntityState.Deleted;
+
+                    if (party.JobPositionsOfInterest != null)
+                    {
+                        var jobPositionsOfInterest = party.JobPositionsOfInterest.ToList();
+                        foreach (var jobPositionOfInterest in jobPositionsOfInterest)
+                        {
+                            if (jobPositionOfInterest.JobPositionTierOneCategory != null)
+                            {
+                                if (jobPositionOfInterest.JobPositionTierOneCategory.JobPositionTierTwoCategory != null)
+                                    context.Entry(jobPositionOfInterest.JobPositionTierOneCategory.JobPositionTierTwoCategory).State = EntityState.Deleted;                                
+                                context.Entry(jobPositionOfInterest.JobPositionTierOneCategory).State = EntityState.Deleted;
+                            }
+                            context.Entry(jobPositionOfInterest).State = EntityState.Deleted;
+                        }
+                    }
+
+                    context.Parties.Remove(party);
+                    context.SaveChanges();
+                }
             }
         }
 
