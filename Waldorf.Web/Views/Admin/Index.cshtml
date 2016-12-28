@@ -1,0 +1,20 @@
+﻿@model IEnumerable<Waldorf.Domain.School>
+
+@{
+    ViewBag.Title = "Splash Page for Admin";
+}
+
+<h2>Splash Page for Admin</h2>
+
+<p>
+    <strong>Intro/Explanation</strong><br />
+    Welcome to Waldorf Pro, the ultimate tool to organize and track your professional growth and promote continued growth
+
+    the professional organizer that promotes professional growth through record keeping,  tracking your professional development
+</p>
+
+<p>
+    @Html.ActionLink("Log in", "Login", "Account", routeValues: new { entryType = "sa" }, htmlAttributes: new { id = "loginLink" })
+    or
+    @Html.ActionLink("Register", "Register", "Account", routeValues: new { entryType = "sa" }, htmlAttributes: new { id = "registerLink" })
+</p>

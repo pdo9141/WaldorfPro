@@ -14,6 +14,8 @@ namespace Waldorf.DataModel
 
         public DbSet<School> Schools { get; set; }
 
+        public DbSet<SchoolAdmin> SchoolAdmins { get; set; }
+
         public DbSet<PostedJobPosition> PostedJobPositions { get; set; }
     }
 }

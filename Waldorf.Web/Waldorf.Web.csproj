@@ -178,6 +178,8 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\ColleagueController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Global.asax.cs">
@@ -249,6 +251,16 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\Colleague\Create.cshtml" />
+    <Content Include="Views\Colleague\Delete.cshtml" />
+    <Content Include="Views\Colleague\Details.cshtml" />
+    <Content Include="Views\Colleague\Edit.cshtml" />
+    <Content Include="Views\Colleague\Index.cshtml" />
+    <Content Include="Views\Admin\Create.cshtml" />
+    <Content Include="Views\Admin\Delete.cshtml" />
+    <Content Include="Views\Admin\Details.cshtml" />
+    <Content Include="Views\Admin\Edit.cshtml" />
+    <Content Include="Views\Admin\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -262,6 +274,10 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Waldorf.DataModel\Waldorf.DataModel.csproj">
+      <Project>{aa7b92c4-e682-483e-b4ce-a2f9653a367d}</Project>
+      <Name>Waldorf.DataModel</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Waldorf.Domain\Waldorf.Domain.csproj">
       <Project>{a970089b-7674-43cc-9eba-9e47c05711c2}</Project>
       <Name>Waldorf.Domain</Name>

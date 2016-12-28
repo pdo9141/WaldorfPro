@@ -18,6 +18,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DataModel", "DataModel", "{62367223-0B5E-44FA-9C2A-65EAAD0ED91A}"
 	ProjectSection(SolutionItems) = preProject
 		20161119104_Initial.sql = 20161119104_Initial.sql
+		20161227753_AddSchoolAdmin.sql = 20161227753_AddSchoolAdmin.sql
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Identity", "Identity", "{368447B0-DD68-48AC-8984-02067E547A6B}"

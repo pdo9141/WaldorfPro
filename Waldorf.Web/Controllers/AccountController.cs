@@ -55,10 +55,19 @@ namespace Waldorf.Web.Controllers
         //
         // GET: /Account/Login
         [AllowAnonymous]
-        public ActionResult Login(string returnUrl)
+        public ActionResult Login(string returnUrl, string entryType)
         {
             ViewBag.ReturnUrl = returnUrl;
-            return View();
+            
+            if (!String.IsNullOrEmpty(entryType) && IsValidEntryType(entryType))
+                return View(new LoginViewModel { EntryType = entryType });
+            else
+                throw new ArgumentException("Invalid Entry Type");
+        }
+
+        private bool IsValidEntryType(string entryType)
+        {
+            return "c".Equals(entryType, StringComparison.OrdinalIgnoreCase) || "sa".Equals(entryType, StringComparison.OrdinalIgnoreCase);
         }
 
         //
@@ -68,7 +77,7 @@ namespace Waldorf.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
         {
-            if (!ModelState.IsValid)
+            if (!ModelState.IsValid || !IsValidEntryType(model.EntryType))
             {
                 return View(model);
             }
@@ -79,7 +88,7 @@ namespace Waldorf.Web.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
-                    return RedirectToLocal(returnUrl);
+                    return RedirectToAction("Index", GetControllerNameByEntryType(model.EntryType));
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:
@@ -89,6 +98,16 @@ namespace Waldorf.Web.Controllers
                     ModelState.AddModelError("", "Invalid login attempt.");
                     return View(model);
             }
+        }
+
+        private string GetControllerNameByEntryType(string entryType)
+        {
+            if ("c".Equals(entryType, StringComparison.OrdinalIgnoreCase))
+                return "Colleague";
+            else if ("sa".Equals(entryType, StringComparison.OrdinalIgnoreCase))
+                return "Admin";
+
+            return "Home";
         }
 
         //
@@ -137,9 +156,12 @@ namespace Waldorf.Web.Controllers
         //
         // GET: /Account/Register
         [AllowAnonymous]
-        public ActionResult Register()
+        public ActionResult Register(string entryType)
         {
-            return View();
+            if (!String.IsNullOrEmpty(entryType) && IsValidEntryType(entryType))
+                return View(new RegisterViewModel { EntryType = entryType });
+            else
+                throw new ArgumentException("Invalid Entry Type");
         }
 
         //
@@ -149,7 +171,7 @@ namespace Waldorf.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValid && IsValidEntryType(model.EntryType))
             {
                 var user = new ApplicationUser { UserName = model.UserName, Email = model.Email };
                 var result = await UserManager.CreateAsync(user, model.Password);
@@ -163,7 +185,7 @@ namespace Waldorf.Web.Controllers
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Index", GetControllerNameByEntryType(model.EntryType));
                 }
                 AddErrors(result);
             }

@@ -53,6 +53,10 @@
     <Compile Include="Migrations\201612200536221_Initial.Designer.cs">
       <DependentUpon>201612200536221_Initial.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201612280350419_AddSchoolAdmin.cs" />
+    <Compile Include="Migrations\201612280350419_AddSchoolAdmin.Designer.cs">
+      <DependentUpon>201612280350419_AddSchoolAdmin.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WaldorfContext.cs" />
@@ -72,6 +76,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201612200536221_Initial.resx">
       <DependentUpon>201612200536221_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612280350419_AddSchoolAdmin.resx">
+      <DependentUpon>201612280350419_AddSchoolAdmin.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

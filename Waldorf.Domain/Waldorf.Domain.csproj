@@ -80,7 +80,7 @@
     <Compile Include="RecommendationLetter.cs" />
     <Compile Include="School.cs" />
     <Compile Include="SchoolDescriptionTypeWrapper.cs" />
-    <Compile Include="SchoolParty.cs" />
+    <Compile Include="SchoolAdmin.cs" />
     <Compile Include="StateCredential.cs" />
     <Compile Include="TeachingExperience.cs" />
     <Compile Include="Undergraduate.cs" />

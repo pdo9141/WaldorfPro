@@ -1,0 +1,130 @@
+﻿@model Waldorf.Domain.Party
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Party</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.PartyStatusType)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PartyStatusType)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FirstName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FirstName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LastName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LastName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EmailAddress)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EmailAddress)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ZipCode)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ZipCode)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AnthroposophicalFoundationalStudies)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AnthroposophicalFoundationalStudies)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AllowSchoolMatchWithoutApproval)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AllowSchoolMatchWithoutApproval)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.WaldorfTranscriptFileName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.WaldorfTranscriptFileName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AnyWaldorfAdminCertUnitsCompleted)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AnyWaldorfAdminCertUnitsCompleted)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BiographyFileName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BiographyFileName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PreferredName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PreferredName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ProfileImageName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ProfileImageName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UserId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UserId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DateCreated)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DateCreated)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

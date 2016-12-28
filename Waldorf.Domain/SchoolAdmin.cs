@@ -3,11 +3,11 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Waldorf.Domain
 {
-    public class SchoolParty
+    public class SchoolAdmin
     {
         public long Id { get; set; }
 
-        public int SchoolId { get; set; }
+        public School School { get; set; }
 
         [StringLength(128)]
         [Required]
