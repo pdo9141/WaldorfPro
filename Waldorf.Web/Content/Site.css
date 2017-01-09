@@ -22,3 +22,12 @@ select,
 textarea {
     max-width: 280px;
 }
+
+.ddWithChildDependency {
+    margin-left: 20px;
+}
+
+.ddWithParentDependency {
+    margin-left: 40px;
+    display: none;
+}

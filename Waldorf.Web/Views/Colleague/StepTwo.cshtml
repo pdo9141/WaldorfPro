@@ -1,0 +1,120 @@
+﻿@model Waldorf.Web.ViewModels.Colleague.StepTwoViewModel
+@using Waldorf.Common.ExtensionMethods
+
+@{
+    ViewBag.Title = "Step Two";
+}
+
+<h2>StepTwo</h2>
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            <div class="col-md-12">
+                Nice to meet you, @Model.ProfessionalName.<br />
+                What can we call you? For example, @Html.EditorFor(model => model.IsFirstNamePreferred) @Model.FirstName,<br />
+                @Html.EditorFor(model => model.IsProfessionalNamePreferred) @Model.ProfessionalName or something else: @Html.EditorFor(model => model.OtherNamePreferred).
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-12">
+                Teacher @Html.RadioButton("ColleagueType", "Teacher") Administrator @Html.RadioButton("ColleagueType", "Administrator")<br />
+                Teacher/Administrator @Html.RadioButton("ColleagueType", "TeacherAdministrator")
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-12">
+                <h4>Teacher</h4>
+                <table>
+                    @foreach (var teacherJobPositionOfInterest in @Model.TeacherJobPositionsOfInterest)
+                    {
+                        var checkboxId = "cbTeacherJobInterest" + teacherJobPositionOfInterest.Id;
+                        <tr>
+                            <td valign="top"><input type="checkbox" name="@checkboxId" id="@checkboxId" value="@teacherJobPositionOfInterest.Id" @(teacherJobPositionOfInterest.Selected ? "checked" : "") /></td>
+                            <td>
+                                @teacherJobPositionOfInterest.DisplayName<br />
+                                
+                                @if (teacherJobPositionOfInterest.Categories.Count > 0)
+                                {
+                                    var selectIdTierOne = "ddlTeacherTierOneCategory" + teacherJobPositionOfInterest.Id;
+
+                                    <select class="ddWithChildDependency" id="@selectIdTierOne" name="@selectIdTierOne">
+                                    @foreach (var tierOneCategory in teacherJobPositionOfInterest.Categories)
+                                    {
+                                        <option value="@tierOneCategory.Id" @(tierOneCategory.Selected ? "selected" : "")>@tierOneCategory.DisplayName</option>
+                                    }
+                                    </select><br />
+                                }
+
+                                @foreach (var tierOneCategory in teacherJobPositionOfInterest.Categories)
+                                {
+                                    if (tierOneCategory.Categories.Count > 0)
+                                    {
+                                        var selectIdTierOne = "ddlTeacherTierOneCategory" + teacherJobPositionOfInterest.Id;
+                                        var selectIdTierTwo = "ddlTeacherTierTwoCategory" + tierOneCategory.Id;
+                                        <select class="ddWithParentDependency" id="@selectIdTierTwo" name="@selectIdTierTwo" data-parent-id="@selectIdTierOne" data-parent-option-value="@tierOneCategory.Id">
+                                        @foreach (var tierTwoCategory in tierOneCategory.Categories)
+                                        {
+                                            <option value="@tierTwoCategory.Id" @(tierTwoCategory.Selected ? "selected" : "")>@tierTwoCategory.DisplayName</option>
+                                        }
+                                        </select>
+                                    }
+                                }
+                            </td>
+                        </tr>
+                    }
+                </table>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-12">
+                <h4>Admin</h4>
+                <table>
+                    @foreach (var adminJobPositionOfInterest in @Model.AdminJobPositionsOfInterest)
+                    {
+                        var checkboxId = "cbAdminJobInterest" + adminJobPositionOfInterest.Id;
+                        <tr>
+                            <td valign="top"><input type="checkbox" name="@checkboxId" id="@checkboxId" value="@adminJobPositionOfInterest.Id" @(adminJobPositionOfInterest.Selected ? "checked" : "") /></td>
+                            <td>@adminJobPositionOfInterest.DisplayName</td>
+                        </tr>
+                    }
+                </table>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </div>
+    </div>
+}
+
+@section Scripts {
+<script type="text/javascript">
+$(document).ready(function() {
+    var dropdownsWithParentDependency = $('select.ddWithParentDependency');
+    var dropdownsWithChildDependency = $('select.ddWithChildDependency');
+    dropdownsWithChildDependency.change(function () {
+        var id = $(this)[0].id;
+        var selectedOptionValue = $(this).find('option:selected').val();
+        dropdownsWithParentDependency.each(function () {
+            var parentId = $(this).data('parent-id');
+            var parentOptionValue = $(this).data('parent-option-value');
+            if (parentId == id && parentOptionValue == selectedOptionValue)
+                $(this).show();
+            else
+                $(this).hide();
+        })
+    });
+});
+</script>
+}
