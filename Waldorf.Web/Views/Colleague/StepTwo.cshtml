@@ -104,8 +104,16 @@ $(document).ready(function() {
     var dropdownsWithParentDependency = $('select.ddWithParentDependency');
     var dropdownsWithChildDependency = $('select.ddWithChildDependency');
     dropdownsWithChildDependency.change(function () {
-        var id = $(this)[0].id;
-        var selectedOptionValue = $(this).find('option:selected').val();
+        setDependencyDropdownStates(this);
+    });
+
+    dropdownsWithChildDependency.each(function (index, element) {
+        setDependencyDropdownStates(element);
+    })
+
+    function setDependencyDropdownStates(element) {
+        var id = $(element)[0].id;
+        var selectedOptionValue = $(element).find('option:selected').val();
         dropdownsWithParentDependency.each(function () {
             var parentId = $(this).data('parent-id');
             var parentOptionValue = $(this).data('parent-option-value');
@@ -114,7 +122,7 @@ $(document).ready(function() {
             else
                 $(this).hide();
         })
-    });
+    }
 });
 </script>
 }

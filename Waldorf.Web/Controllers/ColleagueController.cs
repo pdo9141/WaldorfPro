@@ -21,7 +21,6 @@ namespace Waldorf.Web.Controllers
         // GET: Colleague
         public ActionResult Index()
         {
-            //var userId = User.Identity.GetUserId();
             if (User.Identity.IsAuthenticated)
                 return RedirectToAction("StepOne", "Colleague");
             else
@@ -30,7 +29,19 @@ namespace Waldorf.Web.Controllers
 
         public ActionResult StepOne()
         {
-            return View(new StepOneViewModel());
+            var model = new StepOneViewModel();
+            var userId = User.Identity.GetUserId();
+            using (var context = new WaldorfContext())
+            {
+                var party = context.Parties.First(p => p.UserId.Equals(userId));
+                model.FirstName = party.FirstName ?? String.Empty;
+                model.LastName = party.LastName ?? String.Empty;
+                model.EmailAddress = party.EmailAddress ?? String.Empty;
+                model.ConfirmEmailAddress = model.EmailAddress;
+                model.ZipCode = party.ZipCode ?? String.Empty;
+            }
+
+            return View(model);
         }
 
         [HttpPost]
@@ -39,8 +50,17 @@ namespace Waldorf.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                //db.Parties.Add(party);
-                //db.SaveChanges();
+                var userId = User.Identity.GetUserId();
+                using (var context = new WaldorfContext())
+                {
+                    var party = context.Parties.First(p => p.UserId.Equals(userId));
+                    party.FirstName = model.FirstName;
+                    party.LastName = model.LastName;
+                    party.EmailAddress = model.EmailAddress;
+                    party.ZipCode = model.ZipCode;
+                    context.SaveChanges();
+                }
+                
                 return RedirectToAction("StepTwo");
             }
 
@@ -139,14 +159,74 @@ namespace Waldorf.Web.Controllers
 
             if (ModelState.IsValid)
             {
-                //db.Parties.Add(party);
-                //db.SaveChanges();
+                var userId = User.Identity.GetUserId();
+                using (var context = new WaldorfContext())
+                {
+                    var party = context.Parties.First(p => p.UserId.Equals(userId));
+                    party.PreferredName = model.OtherNamePreferred;
+                    AddPartyTypes(party, model.ColleagueType);
+                    AddJobPositionsOfInterest(party, model.TeacherJobPositionsOfInterest);
+                    AddJobPositionsOfInterest(party, model.AdminJobPositionsOfInterest);
+
+                    context.SaveChanges();
+                }
                 return RedirectToAction("StepThree");
             }
 
             return View(model);
         }
         
+        private void AddPartyTypes(Party party, string colleagueType)
+        {
+            switch (colleagueType)
+            {
+                case "Teacher":
+                    party.PartyTypes.Add(PartyType.Teacher);
+                    break;
+                case "Administrator":
+                    party.PartyTypes.Add(PartyType.Administrator);
+                    break;
+                case "TeacherAdministrator":
+                    party.PartyTypes.Add(PartyType.Teacher);
+                    party.PartyTypes.Add(PartyType.Administrator);
+                    break;
+            }
+        }
+
+        private void AddJobPositionsOfInterest(Party party, List<JobPositionOfInterestViewModel> jobPositionOfInterestViewModels)
+        {
+            var jobPositionsOfInterest = new HashSet<JobPositionWrapper>();
+
+            foreach (var jobPositionOfInterestViewModel in jobPositionOfInterestViewModels)
+            {
+                if (jobPositionOfInterestViewModel.Selected)
+                {
+                    var jobPosition = new JobPositionWrapper { JobPositionType = jobPositionOfInterestViewModel.JobPositionType };
+                    foreach (var jobPositionTierOneCategoryViewModel in jobPositionOfInterestViewModel.Categories)
+                    {
+                        if (jobPositionTierOneCategoryViewModel.Selected)
+                        {
+                            var jobPositionTierOneCategory = new JobPositionTierOneCategory { JobPositionTierOneCategoryType = jobPositionTierOneCategoryViewModel.JobPositionTierOneCategoryType };
+                            foreach (var jobPositionTierTwoCategoryViewModel in jobPositionTierOneCategoryViewModel.Categories)
+                            {
+                                if (jobPositionTierTwoCategoryViewModel.Selected)
+                                {
+                                    var jobPositionTierTwoCategory = new JobPositionTierTwoCategory { JobPositionTierTwoCategoryType = jobPositionTierTwoCategoryViewModel.JobPositionTierTwoCategoryType };
+                                    jobPositionTierOneCategory.JobPositionTierTwoCategory = jobPositionTierTwoCategory;
+                                }
+                            }
+
+                            jobPosition.JobPositionTierOneCategory = jobPositionTierOneCategory;
+                        }
+                    }
+                    
+                    jobPositionsOfInterest.Add(jobPosition);
+                }
+            }
+
+            party.JobPositionsOfInterest = jobPositionsOfInterest;
+        }
+
         // GET: Colleague/Details/5
         public ActionResult Details(long? id)
         {

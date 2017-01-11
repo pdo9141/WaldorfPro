@@ -9,12 +9,16 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Waldorf.Web.Models;
+using Waldorf.DataModel;
+using Waldorf.Domain;
+using Waldorf.Domain.Enums;
 
 namespace Waldorf.Web.Controllers
 {
     [Authorize]
     public class AccountController : Controller
     {
+        private WaldorfContext db = new WaldorfContext();
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
 
@@ -178,6 +182,7 @@ namespace Waldorf.Web.Controllers
                 if (result.Succeeded)
                 {
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
+                    SaveUserIdRelationship(model.EntryType, user.Id);
                     
                     // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
@@ -192,6 +197,37 @@ namespace Waldorf.Web.Controllers
 
             // If we got this far, something failed, redisplay form
             return View(model);
+        }
+
+        private void SaveUserIdRelationship(string entryType, string id)
+        {
+            if ("c".Equals(entryType, StringComparison.OrdinalIgnoreCase))
+            {
+                var party = new Party
+                {
+                    PartyStatusType = PartyStatusType.Pending,                  
+                    UserId = id,
+                    DateCreated = DateTime.UtcNow
+                };
+
+                using (var context = new WaldorfContext())
+                {
+                    context.Parties.Add(party);
+                    context.SaveChanges();
+                }
+            }
+            else if ("sa".Equals(entryType, StringComparison.OrdinalIgnoreCase))
+            {
+                using (var context = new WaldorfContext())
+                {
+                    context.SchoolAdmins.Add(new SchoolAdmin
+                    {
+                        UserId = id,
+                        DateCreated = DateTime.UtcNow
+                    });
+                    context.SaveChanges();
+                }
+            }
         }
 
         //

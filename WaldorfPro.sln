@@ -19,6 +19,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DataModel", "DataModel", "{
 	ProjectSection(SolutionItems) = preProject
 		20161119104_Initial.sql = 20161119104_Initial.sql
 		20161227753_AddSchoolAdmin.sql = 20161227753_AddSchoolAdmin.sql
+		20170110723_ChangeNotNullPartyCols.sql = 20170110723_ChangeNotNullPartyCols.sql
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Identity", "Identity", "{368447B0-DD68-48AC-8984-02067E547A6B}"

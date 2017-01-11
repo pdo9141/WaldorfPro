@@ -30,24 +30,20 @@ namespace Waldorf.Domain
 
         public PartyStatusType PartyStatusType { get; set; }
 
-        [Display(Name = "First Name")]
-        [Required]
+        [Display(Name = "First Name")]        
         [StringLength(50)]
         public string FirstName { get; set; }
 
-        [Display(Name = "Last Name")]
-        [Required]
+        [Display(Name = "Last Name")]        
         [StringLength(50)]
         public string LastName { get; set; }
 
         [EmailAddress]
-        [Display(Name = "Email Address")]
-        [Required]
+        [Display(Name = "Email Address")]        
         [StringLength(75)]
         public string EmailAddress { get; set; }
 
-        [Display(Name = "ZIP Code")]
-        [Required]
+        [Display(Name = "ZIP Code")]       
         [StringLength(10)]
         public string ZipCode { get; set; }
 
@@ -94,7 +90,6 @@ namespace Waldorf.Domain
         public string BiographyFileName { get; set; }
 
         [StringLength(75)]
-        [Required]
         public string PreferredName { get; set; }
 
         [StringLength(100)]
