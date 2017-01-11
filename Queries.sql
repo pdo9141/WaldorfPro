@@ -57,6 +57,9 @@ SELECT * FROM [dbo].[Parties]
 SELECT * FROM [dbo].[JobPositionWrappers]
 SELECT * FROM [dbo].[JobPositionTierOneCategories]
 SELECT * FROM [dbo].[JobPositionTierTwoCategories]
+--DELETE JobPositionWrappers
+--DELETE JobPositionTierOneCategories
+--DELETE JobPositionTierTwoCategories
 
 --PostedJob Linkage
 SELECT * FROM [dbo].[PostedJobPositions]

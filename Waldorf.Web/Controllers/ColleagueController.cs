@@ -195,8 +195,6 @@ namespace Waldorf.Web.Controllers
 
         private void AddJobPositionsOfInterest(Party party, List<JobPositionOfInterestViewModel> jobPositionOfInterestViewModels)
         {
-            var jobPositionsOfInterest = new HashSet<JobPositionWrapper>();
-
             foreach (var jobPositionOfInterestViewModel in jobPositionOfInterestViewModels)
             {
                 if (jobPositionOfInterestViewModel.Selected)
@@ -219,12 +217,10 @@ namespace Waldorf.Web.Controllers
                             jobPosition.JobPositionTierOneCategory = jobPositionTierOneCategory;
                         }
                     }
-                    
-                    jobPositionsOfInterest.Add(jobPosition);
+
+                    party.JobPositionsOfInterest.Add(jobPosition);
                 }
             }
-
-            party.JobPositionsOfInterest = jobPositionsOfInterest;
         }
 
         // GET: Colleague/Details/5
